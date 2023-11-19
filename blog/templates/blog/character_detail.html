@@ -1,0 +1,64 @@
+
+{% block content %}
+    <style>
+        /* Styles spécifiques à l'arrière-plan de la page */
+        body {
+            background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F5e%2F4c%2F65%2F5e4c655b9353e0be289273b3e7c4b227.jpg&f=1&nofb=1&ipt=80b2a04eb8f8044d6228180045159d8c865dbb3c4a3ef1447ad6515d23d73a41&ipo=images');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* Styles spécifiques à la page header */
+        .page-header {
+            background-color: rgba(22, 6, 6, 0.8); /* Couleur de fond semi-transparente pour le contenu */
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .page-header h1 a {
+            color: #d91d1d;
+            font-size: 36pt;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Styles spécifiques pour les images */
+        .character-image {
+            width: 200px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        /* Autres styles spécifiques... */
+
+        /* Style pour le formulaire */
+        .post-form {
+            /* Ajoutez des styles selon vos besoins */
+        }
+    </style>
+
+    <div class="page-header">
+        <!-- Contenu spécifique à character_detail.html -->
+        <h1>
+            <a href="/">{{ character.id_character }}</a>
+        </h1>
+        <!-- Affichage de l'image du personnage -->
+        <img src="{{ character.photo }}" alt="Photo de {{ character.id_character }}" class="character-image">
+        <form method="POST" class="post-form">{% csrf_token %}
+            <b> Changer : </b> {{ form.as_ul }}
+            <button type="submit" class="btn btn-outline-light">OK</button>
+            <a href="{% url 'character_list' %}">Back</a>
+        </form>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Village de Konoha</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'> <!-- Police Roboto Condensed -->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+    <style>
+       
+        body {
+            background-image: url('https://wallpaperaccess.com/full/3704401.jpg'); 
+            background-size: cover; 
+            color: #ed1212; 
+            font-family: 'Roboto Condensed', sans-serif; 
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Styles spécifiques à la container */
+        .container {
+            width: 90%; /* Ajuster la largeur du conteneur */
+            margin: auto;
+            padding-top: 20px;
+        }
+
+        /* Styles spécifiques à la page header */
+        .page-header {
+        background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F5e%2F4c%2F65%2F5e4c655b9353e0be289273b3e7c4b227.jpg&f=1&nofb=1&ipt=80b2a04eb8f8044d6228180045159d8c865dbb3c4a3ef1447ad6515d23d73a41&ipo=images'); /* Remplacez 'chemin/vers/votre/image.jpg' par le chemin de votre image */
+        background-size: cover; /* Ajuste la taille de l'image pour couvrir tout l'en-tête */
+        padding: 20px;
+    }
+
+        .page-header h1 a {
+            color: #d91d1d; /* Rouge Konoha pour le lien */
+            font-size: 36pt;
+            text-decoration: none;
+            font-weight: bold; /* Texte en gras */
+        }
+
+        /* Styles spécifiques à la section characters et equipments */
+        .characters h2,
+        .equipments h2 {
+            color: #d91d1d; /* Rouge Konoha pour le titre */
+            border-bottom: 2px solid #d91d1d; /* Ligne de séparation */
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            font-weight: bold; /* Texte en gras */
+            font-size: 24px; /* Taille de police plus grande */
+        }
+
+        /* Styles spécifiques aux tableaux */
+        .characters table,
+        .equipments table {
+            width: 100%; /* Tableau prend toute la largeur disponible */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .characters th,
+        .characters td,
+        .equipments th,
+        .equipments td {
+            border: 1px solid #333; /* Bordures pour les cellules */
+            padding: 8px;
+            font-weight: bold; /* Texte en gras */
+            font-size: 16px; /* Taille de police */
+            color: #80f7ff; /* Couleur du texte en blanc */
+        }
+
+        .characters th,
+        .equipments th {
+            background-color: #1a1a1a; /* Couleur de fond pour les en-têtes */
+            color: #ff0000;
+            text-align: left;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #000000; /* Couleur du texte en blanc */
+        }
+
+        .footer a {
+            color: #d91d1d; /* Rouge Konoha pour les liens dans le footer */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="title-text"><a href="/">Village de Konoha</a></h1>
+        </div>
+    
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+              
+            <div class="characters">
+                <h2>Ninjas</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom du ninja</th>
+                            <th>État</th>
+                            <th>Type</th>
+                            <th>Race</th>
+                            <th>Lieu</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for character in characters %}
+                        <tr>
+                            <td><a href="{% url 'character_detail' id_character=character.id_character %}">{{ character.id_character }}</a></td>
+                            <td>{{ character.etat }}</td>
+                            <td>{{ character.type }}</td>
+                            <td>{{ character.race }}</td>
+                            <td>{{ character.lieu.id_equip }}</td>
+                            <td><img src="{{ character.photo }}" alt="Photo de {{ character.id_character }}" style="width: 100px;"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+            <!-- Section des Équipements -->
+            <div class="equipments">
+                <h2>Lieu</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom de lieu</th>
+                            <th>Disponibilité</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for equipement in equipements %}
+                        <tr>
+                            <td>{{ equipement.id_equip }}</td> 
+                            <td>{{ equipement.disponibilite }}</td>
+                            <td><img src="{{ equipement.photo }}" alt="Photo de {{ equipement.id_equip }}" style="width: 100px;"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="footer">
+                <p>Retour à la <a href="{% url 'character_list' %}">Liste des ninjas</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
